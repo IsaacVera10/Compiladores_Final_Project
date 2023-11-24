@@ -27,10 +27,6 @@ store 6
 load 5
 load 4
 add
-load 5
-load 4
-add
-add
 print
 L1: skip
 load 2
