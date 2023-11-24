@@ -17,11 +17,22 @@ load 2
 push  1
 sub
 store 2
+load 2
+push 0
+swap
+sub
 print
 push  0
 load 2
 lt
 store 0
+load 0
+jmpz L2
+push 0
+goto L3
+L2: skip 0
+push 1
+L3: skip
 print
 goto L0
 L1: skip

@@ -2,7 +2,7 @@ var bool a,b;
 var int x,y;
 
 x = 4;
-y=10;
+y = 10;
 a = 15<10;
 
 if a then
