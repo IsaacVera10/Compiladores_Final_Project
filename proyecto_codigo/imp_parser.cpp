@@ -74,9 +74,6 @@ Token* Scanner::nextToken() {
   } else if (strchr("()+-*/;=<,!:", c)) {
     switch(c) {
     case '(': token = new Token(Token::LPAREN); break;
-    if (c == '/') {
-
-    }
     case ')': token = new Token(Token::RPAREN); break;
     case '+': token = new Token(Token::PLUS); break;
     case '-': token = new Token(Token::MINUS); break;
