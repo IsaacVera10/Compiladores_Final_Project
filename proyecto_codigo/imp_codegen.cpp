@@ -162,12 +162,6 @@ int ImpCodeGen::visit(ForStatement* s) {//Código Objeto para for
   codegen(startLabel, "skip");
   codegen(nolabel, "load", direcciones.lookup(s->id));
   int b = s->e2->accept(this);
-  // if(a <= b){
-  //   codegen(nolabel, "le"); // ge
-  // }
-  // else{
-  //   codegen(nolabel, "ge"); // ge
-  // }
   codegen(nolabel, "le"); // ge
   codegen(nolabel, "jmpz", endLabel);
 

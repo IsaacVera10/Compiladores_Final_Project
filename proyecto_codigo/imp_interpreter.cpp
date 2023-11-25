@@ -73,10 +73,7 @@ int ImpInterpreter::visit(IfStatement* s) {
 }
 
 int ImpInterpreter::visit(WhileStatement* s) {
-//  while (s->cond->accept(this)) {
-//     s->body->accept(this);
-//   }
-  
+
   // Cambio añadiendo el break y continue flag
   while (s->cond->accept(this) && !breakFlag) {
     s->body->accept(this);
@@ -91,11 +88,6 @@ int ImpInterpreter::visit(WhileStatement* s) {
 }
 
 int ImpInterpreter::visit(DoWhileStatement* s) {
-//  do
-//  {
-//   s->body->accept(this);
-//  } while (s->cond->accept(this));
-  
   // Cambio añadiendo el break y continue flag
   do {
       s->body->accept(this);
@@ -110,26 +102,6 @@ int ImpInterpreter::visit(DoWhileStatement* s) {
 
 
 int ImpInterpreter::visit(ForStatement* s) {
-  // int n1 = s->e1->accept(this);
-  // int n2 = s->e2->accept(this);
-  // env.add_level();
-  // env.add_var(s->id);
-
-  // // Funcionalidad de for creciente y decreciente
-  // if(n1 <= n2){
-  //   // Caso creciente
-  //   for (int i = n1; i <= n2; i++) {
-  //     env.update(s->id,i);
-  //     s->body->accept(this);
-  //   }
-  // } else{
-  //   // Caso decreciente
-  //   for (int i = n1; i >=n2; i--) {
-  //     env.add_var(s->id, i);
-  //     s->body->accept(this);
-  //   }
-  // }
-  // env.remove_level();
   // Modicacion a ForStatement con Break y Continue
   int n1 = s->e1->accept(this);
   int n2 = s->e2->accept(this);
