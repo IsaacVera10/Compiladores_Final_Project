@@ -18,6 +18,8 @@ public:
   int visit(WhileStatement*);
   int visit(DoWhileStatement*); // Agregar el visit en ImpPrinter
   int visit(ForStatement*);
+  int visit(BreakStatement*); // Agregar los metodos visit a Break y Continue
+  int visit(ContinueStatement*);
   
   int visit(BinaryExp* e);
   int visit(UnaryExp* e);

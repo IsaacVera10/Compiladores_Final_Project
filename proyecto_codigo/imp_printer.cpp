@@ -101,6 +101,19 @@ int ImpPrinter::visit(ForStatement* s) {
   return 0;
 }
 
+// Agregar las implementaciones de visit a Break y Continue Staments
+int ImpPrinter::visit(BreakStatement* s) {
+    cout << "break";
+    return 0;
+}
+
+int ImpPrinter::visit(ContinueStatement* s) {
+    cout << "continue";
+    return 0;
+}
+
+
+
 int ImpPrinter::visit(BinaryExp* e) {
   e->left->accept(this);
   cout << ' ' << Exp::binopToString(e->op) << ' ';

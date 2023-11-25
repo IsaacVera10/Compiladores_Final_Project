@@ -86,25 +86,30 @@ void ImpTypeChecker::visit(IfStatement* s) {
 }
 
 void ImpTypeChecker::visit(WhileStatement* s) {
+  loopNestingLevel++;
   if (!s->cond->accept(this).match(booltype)) {
     cout << "Condicional en WhileStm debe de ser: " << booltype << endl;
     exit(0);
   }  
   s->body->accept(this);
+  loopNestingLevel--;
  return;
 }
 
 // Agregamos la implementacion del typechecker del DoWhileStatement
 void ImpTypeChecker::visit(DoWhileStatement* s) {
+  loopNestingLevel++;
   if (!s->cond->accept(this).match(booltype)) {
     cout << "Condicional en DoWhileStm debe de ser: " << booltype << endl;
     exit(0);
   }  
   s->body->accept(this);
+  loopNestingLevel--;
  return;
 }
 
 void ImpTypeChecker::visit(ForStatement* s) {
+  loopNestingLevel++;
   ImpType t1 = s->e1->accept(this);
   ImpType t2 = s->e2->accept(this);
   if (!t1.match(inttype) || !t2.match(inttype)) {
@@ -115,7 +120,22 @@ void ImpTypeChecker::visit(ForStatement* s) {
   env.add_var(s->id,inttype);
   s->body->accept(this);
   env.remove_level();
+  loopNestingLevel--;
  return;
+}
+
+void ImpTypeChecker::visit(BreakStatement* s) {
+    if (loopNestingLevel <= 0) {
+        cout << "Error: 'break' fuera de un bucle" << endl;
+        exit(0);
+    }
+}
+
+void ImpTypeChecker::visit(ContinueStatement* s) {
+    if (loopNestingLevel <= 0) {
+        cout << "Error: 'continue' fuera de un bucle" << endl;
+        exit(0);
+    }
 }
 
 ImpType ImpTypeChecker::visit(BinaryExp* e) {

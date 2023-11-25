@@ -166,6 +166,23 @@ public:
   ~ForStatement();
 };
 
+// Agregar las clases BreakStatement y ContinueStatemnt al AST
+class BreakStatement : public Stm {
+public:
+  BreakStatement();
+  int accept(ImpVisitor* v);
+  void accept(TypeVisitor* v);
+  ~BreakStatement();
+};
+
+class ContinueStatement : public Stm {
+public:
+  ContinueStatement();
+  int accept(ImpVisitor* v);
+  void accept(TypeVisitor* v);
+  ~ContinueStatement();
+};
+
 
 class StatementList {
 public:

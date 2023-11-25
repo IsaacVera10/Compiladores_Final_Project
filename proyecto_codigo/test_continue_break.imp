@@ -1,0 +1,13 @@
+var int x;
+x = 0;
+
+do
+    x = x + 1;    
+    print(x);
+    if x==4 then
+        print(x+10);
+        break
+    else
+        continue
+    endif
+while(x < 6)

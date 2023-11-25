@@ -103,6 +103,8 @@ IfStatement::IfStatement(Exp* c,Body *tb, Body* fb):cond(c),tbody(tb), fbody(fb)
 WhileStatement::WhileStatement(Exp* c,Body *b):cond(c),body(b) { }
 DoWhileStatement::DoWhileStatement(Exp* c, Body* b): cond(c), body(b){ } // Agragar constructor de DoWhileStatement
 ForStatement::ForStatement(string id, Exp* e1,Exp* e2, Body *b):id(id),e1(e1),e2(e2), body(b) { }
+BreakStatement::BreakStatement() {} // Agregar constructor de Break y ContinueStament
+ContinueStatement::ContinueStatement() {}
 
 StatementList::StatementList():slist() {}
 VarDec::VarDec(string type, list<string> vars):type(type), vars(vars) {}
@@ -117,6 +119,9 @@ IfStatement::~IfStatement() { delete fbody; delete tbody; delete cond; }
 WhileStatement::~WhileStatement() { delete body; delete cond; }
 DoWhileStatement::~DoWhileStatement() { delete body; delete cond; }
 ForStatement::~ForStatement() { delete body; delete e2; delete e1; }
+BreakStatement::~BreakStatement() {} // Agregar Destructor de Break y Continue Statemnt
+ContinueStatement::~ContinueStatement() {}
+
 
 StatementList::~StatementList() { }
 VarDec::~VarDec() { }
@@ -145,6 +150,23 @@ int DoWhileStatement::accept(ImpVisitor* v) {
 }
 
 int ForStatement::accept(ImpVisitor* v) {
+  return v->visit(this);
+}
+
+// Agregar la implementación de los metodos accept de Break y Continue
+int BreakStatement::accept(ImpVisitor* v) {
+  return v->visit(this);
+}
+
+void BreakStatement::accept(TypeVisitor* v) {
+  return v->visit(this);
+}
+
+int ContinueStatement::accept(ImpVisitor* v) {
+  return v->visit(this);
+}
+
+void ContinueStatement::accept(TypeVisitor* v) {
   return v->visit(this);
 }
 

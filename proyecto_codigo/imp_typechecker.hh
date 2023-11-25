@@ -16,7 +16,8 @@ private:
   Environment<ImpType> env;
   ImpType booltype;
   ImpType inttype;
-
+  int loopNestingLevel = 0;
+  
 public:
   void typecheck(Program*);
   void visit(Program*);
@@ -30,7 +31,9 @@ public:
   void visit(WhileStatement*);
   void visit(DoWhileStatement*); // Agregar el visit para DoWhileStatement en el typechecker 
   void visit(ForStatement*);
-  
+  void visit(BreakStatement*); // Agregar al typechecker visit para Break y Continue statement;
+  void visit(ContinueStatement*);
+
   ImpType visit(BinaryExp* e);
   ImpType visit(UnaryExp* e);
   ImpType visit(NumberExp* e);

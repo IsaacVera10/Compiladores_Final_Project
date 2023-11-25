@@ -112,12 +112,18 @@ int ImpCodeGen::visit(WhileStatement* s) {
   string l1 = next_label();
   string l2 = next_label();
 
+  loopStartLabels.push(l1);
+  loopEndLabels.push(l2);
+
   codegen(l1,"skip");
   s->cond->accept(this);
   codegen(nolabel,"jmpz",l2);
   s->body->accept(this);
   codegen(nolabel,"goto",l1);
   codegen(l2,"skip");
+
+  loopStartLabels.pop();
+  loopEndLabels.pop();
 
   return 0;
 }
@@ -125,6 +131,9 @@ int ImpCodeGen::visit(WhileStatement* s) {
 int ImpCodeGen::visit(DoWhileStatement* s) {
   string l1 = next_label();
   string l2 = next_label();
+  
+  loopStartLabels.push(l1);
+  loopEndLabels.push(l2);
 
   codegen(l1,"skip");
   s->body->accept(this);
@@ -133,7 +142,8 @@ int ImpCodeGen::visit(DoWhileStatement* s) {
   codegen(nolabel,"goto",l1);
 
   codegen(l2,"skip");
-
+  loopStartLabels.pop();
+  loopEndLabels.pop();
   return 0;
 }
 
@@ -141,6 +151,9 @@ int ImpCodeGen::visit(DoWhileStatement* s) {
 int ImpCodeGen::visit(ForStatement* s) {//Código Objeto para for
   string startLabel = next_label();
   string endLabel = next_label();
+
+  loopStartLabels.push(startLabel);
+  loopEndLabels.push(endLabel);  
 
   int a = s->e1->accept(this);
   direcciones.add_var(s->id, siguiente_direccion++);
@@ -167,9 +180,25 @@ int ImpCodeGen::visit(ForStatement* s) {//Código Objeto para for
   codegen(nolabel, "goto", startLabel);
 
   codegen(endLabel, "skip");
-
+  loopStartLabels.pop();
+  loopEndLabels.pop();
   return 0;
 }
+
+int ImpCodeGen::visit(BreakStatement* s) {
+    if (!loopEndLabels.empty()) {
+        codegen(nolabel, "goto", loopEndLabels.top());
+    }
+    return 0;
+}
+
+int ImpCodeGen::visit(ContinueStatement* s) {
+    if (!loopStartLabels.empty()) {
+        codegen(nolabel, "goto", loopStartLabels.top());
+    }
+    return 0;
+}
+
 
 int ImpCodeGen::visit(BinaryExp* e) {
   e->left->accept(this);

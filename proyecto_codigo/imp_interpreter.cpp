@@ -73,44 +73,106 @@ int ImpInterpreter::visit(IfStatement* s) {
 }
 
 int ImpInterpreter::visit(WhileStatement* s) {
- while (s->cond->accept(this)) {
+//  while (s->cond->accept(this)) {
+//     s->body->accept(this);
+//   }
+  
+  // Cambio añadiendo el break y continue flag
+  while (s->cond->accept(this) && !breakFlag) {
     s->body->accept(this);
+    if (continueFlag) {
+        continueFlag = false;
+        continue;
+    }
   }
- return 0;
+  breakFlag = false;
+
+  return 0;
 }
 
 int ImpInterpreter::visit(DoWhileStatement* s) {
- do
- {
-  s->body->accept(this);
- } while (s->cond->accept(this));
- 
+//  do
+//  {
+//   s->body->accept(this);
+//  } while (s->cond->accept(this));
+  
+  // Cambio añadiendo el break y continue flag
+  do {
+      s->body->accept(this);
+      if (continueFlag) {
+          continueFlag = false;
+          continue;
+      }
+  } while (s->cond->accept(this) && !breakFlag);
+  breakFlag = false;
  return 0;
 }
 
 
 int ImpInterpreter::visit(ForStatement* s) {
+  // int n1 = s->e1->accept(this);
+  // int n2 = s->e2->accept(this);
+  // env.add_level();
+  // env.add_var(s->id);
+
+  // // Funcionalidad de for creciente y decreciente
+  // if(n1 <= n2){
+  //   // Caso creciente
+  //   for (int i = n1; i <= n2; i++) {
+  //     env.update(s->id,i);
+  //     s->body->accept(this);
+  //   }
+  // } else{
+  //   // Caso decreciente
+  //   for (int i = n1; i >=n2; i--) {
+  //     env.add_var(s->id, i);
+  //     s->body->accept(this);
+  //   }
+  // }
+  // env.remove_level();
+  // Modicacion a ForStatement con Break y Continue
   int n1 = s->e1->accept(this);
   int n2 = s->e2->accept(this);
   env.add_level();
   env.add_var(s->id);
 
-  // Funcionalidad de for creciente y decreciente
-  if(n1 <= n2){
-    // Caso creciente
-    for (int i = n1; i <= n2; i++) {
-      env.update(s->id,i);
-      s->body->accept(this);
-    }
-  } else{
-    // Caso decreciente
-    for (int i = n1; i >=n2; i--) {
-      env.add_var(s->id, i);
-      s->body->accept(this);
-    }
+  if (n1 <= n2) {
+      // Caso creciente
+      for (int i = n1; i <= n2 && !breakFlag; i++) {
+          env.update(s->id, i);
+          s->body->accept(this);
+          if (continueFlag) {
+              continueFlag = false;  // Restablecer la bandera de continue
+              continue;
+          }
+      }
+  } else {
+      // Caso decreciente
+      for (int i = n1; i >= n2 && !breakFlag; i--) {
+          env.update(s->id, i);
+          s->body->accept(this);
+          if (continueFlag) {
+              continueFlag = false;  // Restablecer la bandera de continue
+              continue;
+          }
+      }
   }
+
+  breakFlag = false;  // Restablecer la bandera de break
   env.remove_level();
+
  return 0;
+}
+
+
+int ImpInterpreter::visit(BreakStatement* s) {
+    breakFlag = true;
+    return 0;
+}
+
+int ImpInterpreter::visit(ContinueStatement* s) {
+    continueFlag = true;
+    return 0;
 }
 
 int ImpInterpreter::visit(BinaryExp* e) {
