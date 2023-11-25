@@ -94,6 +94,16 @@ void ImpTypeChecker::visit(WhileStatement* s) {
  return;
 }
 
+// Agregamos la implementacion del typechecker del DoWhileStatement
+void ImpTypeChecker::visit(DoWhileStatement* s) {
+  if (!s->cond->accept(this).match(booltype)) {
+    cout << "Condicional en DoWhileStm debe de ser: " << booltype << endl;
+    exit(0);
+  }  
+  s->body->accept(this);
+ return;
+}
+
 void ImpTypeChecker::visit(ForStatement* s) {
   ImpType t1 = s->e1->accept(this);
   ImpType t2 = s->e2->accept(this);

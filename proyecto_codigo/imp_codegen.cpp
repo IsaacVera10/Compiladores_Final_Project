@@ -121,19 +121,41 @@ int ImpCodeGen::visit(WhileStatement* s) {
 
   return 0;
 }
+// Agregar la implementación del visit Codegen a DoWhileStatement
+int ImpCodeGen::visit(DoWhileStatement* s) {
+  string l1 = next_label();
+  string l2 = next_label();
+
+  codegen(l1,"skip");
+  s->body->accept(this);
+  s->cond->accept(this);
+  codegen(nolabel,"jmpz",l2);
+  codegen(nolabel,"goto",l1);
+
+  codegen(l2,"skip");
+
+  return 0;
+}
+
 
 int ImpCodeGen::visit(ForStatement* s) {//Código Objeto para for
   string startLabel = next_label();
   string endLabel = next_label();
 
-  s->e1->accept(this);
+  int a = s->e1->accept(this);
   direcciones.add_var(s->id, siguiente_direccion++);
   codegen(nolabel,"store",direcciones.lookup(s->id));
 
   codegen(startLabel, "skip");
   codegen(nolabel, "load", direcciones.lookup(s->id));
-  s->e2->accept(this);
-  codegen(nolabel, "le");
+  int b = s->e2->accept(this);
+  // if(a <= b){
+  //   codegen(nolabel, "le"); // ge
+  // }
+  // else{
+  //   codegen(nolabel, "ge"); // ge
+  // }
+  codegen(nolabel, "le"); // ge
   codegen(nolabel, "jmpz", endLabel);
 
   s->body->accept(this);
@@ -190,7 +212,7 @@ int ImpCodeGen::visit(UnaryExp* e) {
 
 int ImpCodeGen::visit(NumberExp* e) {
   codegen(nolabel,"push ",e->value);
-  return 0;
+  return e->value;
 }
 
 int ImpCodeGen::visit(BoolConstExp* e) { // Codigo Objeto para las constantes booleanas

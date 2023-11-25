@@ -143,6 +143,18 @@ public:
   ~WhileStatement();
 };
 
+// Agregar la clase DoWhileStament en el AST
+class DoWhileStatement : public Stm {
+public:
+  Exp* cond;
+  Body *body;
+  DoWhileStatement(Exp* c, Body* b);
+  int accept(ImpVisitor* v);
+  void accept(TypeVisitor* v);
+  ~DoWhileStatement();
+};
+
+
 class ForStatement : public Stm {
 public:
   string id;

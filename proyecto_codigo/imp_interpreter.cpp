@@ -79,14 +79,35 @@ int ImpInterpreter::visit(WhileStatement* s) {
  return 0;
 }
 
+int ImpInterpreter::visit(DoWhileStatement* s) {
+ do
+ {
+  s->body->accept(this);
+ } while (s->cond->accept(this));
+ 
+ return 0;
+}
+
+
 int ImpInterpreter::visit(ForStatement* s) {
   int n1 = s->e1->accept(this);
   int n2 = s->e2->accept(this);
   env.add_level();
   env.add_var(s->id);
-  for (int i = n1; i <= n2; i++) {
-    env.update(s->id,i);
-    s->body->accept(this);
+
+  // Funcionalidad de for creciente y decreciente
+  if(n1 <= n2){
+    // Caso creciente
+    for (int i = n1; i <= n2; i++) {
+      env.update(s->id,i);
+      s->body->accept(this);
+    }
+  } else{
+    // Caso decreciente
+    for (int i = n1; i >=n2; i--) {
+      env.add_var(s->id, i);
+      s->body->accept(this);
+    }
   }
   env.remove_level();
  return 0;

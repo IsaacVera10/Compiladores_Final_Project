@@ -24,6 +24,7 @@ public:
   int visit(PrintStatement*);
   int visit(IfStatement*);
   int visit(WhileStatement*);
+  int visit(DoWhileStatement*); // Agregar visit para DoWhileStatement para ImpInterpreter
   int visit(ForStatement*);
   
   int visit(BinaryExp* e);
