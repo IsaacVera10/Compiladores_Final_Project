@@ -7,7 +7,9 @@ Integrantes:
 En el presente proyecto se tuvo como objetivo completar e implementar ciertos requerimientos, que se mencionarán más adelante, de un compilador para un lenguaje imperativo denominado IMP0, el cuál está definido por la siguiente gramática:
 
 
-![Sintaxis](./imgs/sintaxis_imp.png)
+<p align="center">
+  <img src="./imgs/sintaxis_imp.png" alt="Sintaxis">
+</p>
 
 En ese sentido, se nos proporción en un folder la implementación del parser, printer, intérprete y typechecker del lenguaje IMP0. Así como también, la implementación del generador de código objeto para las expresiones y sentencias dada por la gramática especificada. El lenguaje objeto para el presente proyecto es el de SVML (Stack Virtual Machine Language) cuya implementación ya fue brindada y en consecuencia se podrá comparar el resultado obtenido por el código objeto generado con el resultado del lenguaje fuente.
 
