@@ -1,0 +1,9 @@
+var int accum, x; // Declaracion de variables globales
+x = 4;
+accum = 0;
+while 0 < x do // Bucle corre de 0 a 3, equivalente a 4 veces
+    accum = accum + x; // Suma de 4 + 3 + 2 + 1 
+    x = x - 1 
+endwhile;
+print(x); // Imprime 10
+print(accum)

@@ -1,0 +1,10 @@
+var int x;
+x = 8;
+
+for i: 4,8 do // Corre de 2 a 10
+    if i==6 or i==8 then // Imprime si es 6 u 8
+        print(i)
+    else
+        print(x*4) // Si no es 6 u 8 imprime el multiplicado por 4 de x
+    endif
+endfor

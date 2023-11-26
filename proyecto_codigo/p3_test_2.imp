@@ -1,0 +1,8 @@
+var int x;
+x = 0;
+do
+    x = x + 1;
+    if x == 2 or x == 4 then // Imprime 2 y 4
+        print(x)
+    endif
+while(x < 5)

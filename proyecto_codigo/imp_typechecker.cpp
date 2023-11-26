@@ -99,11 +99,11 @@ void ImpTypeChecker::visit(WhileStatement* s) {
 // Agregamos la implementacion del typechecker del DoWhileStatement
 void ImpTypeChecker::visit(DoWhileStatement* s) {
   loopNestingLevel++;
+  s->body->accept(this);
   if (!s->cond->accept(this).match(booltype)) {
     cout << "Condicional en DoWhileStm debe de ser: " << booltype << endl;
     exit(0);
   }  
-  s->body->accept(this);
   loopNestingLevel--;
  return;
 }

@@ -1,11 +1,6 @@
-var bool z;
-z = (2 < 4);
+var int x;
 
-if (z) then
-  for x: 9,5 do
-    print(x)
-  endfor
-else
-  print(25+40)
-endif;
-print(z)
+for z: 5,9 do
+    print(z)
+endfor
+

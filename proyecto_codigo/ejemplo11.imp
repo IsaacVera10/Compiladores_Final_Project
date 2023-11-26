@@ -1,9 +1,0 @@
-// Esto es una prueba del programa ejemplo11.imp
-var int x,y;
-var bool a,z;
-x = 12;
-y = 5;
-//hola
-print(ifexp(z,100,200)+2);//alto
-y = y / 1;
-print(y)

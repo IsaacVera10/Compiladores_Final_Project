@@ -1,0 +1,32 @@
+push  8
+store 0
+push  4
+store 1
+L0: skip
+load 1
+push  8
+le
+jmpz L1
+load 1
+push  6
+eq
+load 1
+push  8
+eq
+or
+jmpz L2
+load 1
+print
+goto L3
+L2: skip
+load 0
+push  4
+mul
+print
+L3: skip
+load 1
+push 1
+add
+store 1
+goto L0
+L1: skip

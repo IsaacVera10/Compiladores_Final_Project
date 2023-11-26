@@ -312,7 +312,7 @@ Stm* Parser::parseStatement() {
   } else if(match(Token::DO)){
     tb = parseBody();
     if(!match(Token::WHILE))
-      parserError("Esperaba 'while");
+      parserError("Esperaba 'while' en do-while");
     e = parseExp();
     s = new DoWhileStatement(e,tb);
   } 

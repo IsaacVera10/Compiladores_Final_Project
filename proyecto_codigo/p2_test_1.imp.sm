@@ -1,0 +1,30 @@
+push  2
+push  4
+lt
+store 0
+load 0
+jmpz L0
+push  5
+store 1
+L2: skip
+load 1
+push  9
+le
+jmpz L3
+load 1
+print
+load 1
+push 1
+add
+store 1
+goto L2
+L3: skip
+goto L1
+L0: skip
+push  25
+push  40
+add
+print
+L1: skip
+load 0
+print

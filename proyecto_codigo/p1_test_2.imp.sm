@@ -6,13 +6,13 @@ lt
 jmpz L0
 load 0
 push  2
-
+mul
 store 1
 goto L1
 L0: skip
 load 0
 push  3
-
+mul
 store 1
 L1: skip
 load 1

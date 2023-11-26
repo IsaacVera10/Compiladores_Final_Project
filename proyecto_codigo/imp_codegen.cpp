@@ -154,26 +154,24 @@ int ImpCodeGen::visit(ForStatement* s) {//Código Objeto para for
 
   loopStartLabels.push(startLabel);
   loopEndLabels.push(endLabel);  
+  
+  direcciones.add_var(s->id, siguiente_direccion++); // Permite variable no definida globalmente
 
-  int a = s->e1->accept(this);
-  direcciones.add_var(s->id, siguiente_direccion++);
+  s->e1->accept(this);
   codegen(nolabel,"store",direcciones.lookup(s->id));
-
   codegen(startLabel, "skip");
   codegen(nolabel, "load", direcciones.lookup(s->id));
-  int b = s->e2->accept(this);
-  codegen(nolabel, "le"); // ge
+  s->e2->accept(this);
+  codegen(nolabel, "le");
   codegen(nolabel, "jmpz", endLabel);
-
   s->body->accept(this);
-
   codegen(nolabel, "load", direcciones.lookup(s->id));
   codegen(nolabel, "push", 1);
   codegen(nolabel, "add");
   codegen(nolabel, "store", direcciones.lookup(s->id));
   codegen(nolabel, "goto", startLabel);
-
   codegen(endLabel, "skip");
+
   loopStartLabels.pop();
   loopEndLabels.pop();
   return 0;
